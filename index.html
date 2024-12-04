@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de contraseñas</title>
+  <link rel="stylesheet" type="text/css" href="style/styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Generador de contraseñas</h2>
+    <label for="length">Longitud de contraseña:
+      <output id="length-value"></output>
+    </label>
+    <div class="slider-container">
+      <button id="decrease">-</button>
+      <input type="range" min="8" max="24" value="8" id="length">
+      <button id="increase">+</button>
+    </div>
+    <button id="generate">Generar contraseña</button>
+    <button id="copy">Copiar contraseña</button>
+    <input type="text" id="password" readonly>
+  </div>
+  <script src="app/app.js"></script>
+</body>
+
+</html>
