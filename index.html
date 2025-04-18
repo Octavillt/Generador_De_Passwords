@@ -18,9 +18,48 @@
       <input type="range" min="8" max="24" value="8" id="length">
       <button id="increase">+</button>
     </div>
+
+    <div class="characters-options">
+      <h3>Incluir en la contraseña:</h3>
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="useMayus" checked>
+        <label for="useMayus">Mayúsculas (A-Z)</label>
+      </div>
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="useMinus" checked>
+        <label for="useMinus">Minúsculas (a-z)</label>
+      </div>
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="useNumbers" checked>
+        <label for="useNumbers">Números (0-9)</label>
+      </div>
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="useSymbols" checked>
+        <label for="useSymbols">Símbolos (!@#$%...)</label>
+      </div>
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="useCustomChars">
+        <label for="useCustomChars">Usar caracteres personalizados</label>
+      </div>
+    </div>
+
+    <div id="customCharsContainer" style="display: none;">
+      <label for="textPass">Agregue los caracteres que contendrá la contraseña:</label>
+      <input type="text" id="textPass" placeholder="Digite los caracteres">
+    </div>
+
     <button id="generate">Generar contraseña</button>
     <button id="copy">Copiar contraseña</button>
     <input type="text" id="password" readonly>
+
+    <footer class="footer">
+      <p>&copy; 2025 Octavio Villafranco. Todos los derechos reservados.</p>
+    </footer>
   </div>
   <script src="app/app.js"></script>
 </body>
