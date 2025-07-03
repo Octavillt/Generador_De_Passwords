@@ -144,19 +144,61 @@ generateButton.onclick = function () {
 };
 
 /**
- * Genera una contraseña aleatoria.
+ * Mezcla aleatoriamente los elementos de un arreglo (Fisher-Yates shuffle)
+ * @param {Array} array
+ * @returns {Array}
+ */
+function mezclarArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+/**
+ * Genera una contraseña aleatoria asegurando al menos un carácter de cada tipo seleccionado.
  *
  * @param {number} length – Longitud deseada de la contraseña.
  * @param {string} characters – Cadena con todos los caracteres posibles.
  * @returns {string} Contraseña aleatoria generada.
  */
 let generatePassword = (length, characters) => {
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters[randomIndex];
+    // Si se usan caracteres personalizados, se mantiene el comportamiento actual
+    if (useCustomCharsCheckbox.checked && characters !== '') {
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            result += characters[randomIndex];
+        }
+        return result;
     }
-    return result;
+
+    // Si no, aseguramos al menos un carácter de cada tipo seleccionado
+    let passwordArray = [];
+    let tiposSeleccionados = [];
+
+    if (useMayusCheckbox.checked) tiposSeleccionados.push(mayusCharacters);
+    if (useMinusCheckbox.checked) tiposSeleccionados.push(minusCharacters);
+    if (useNumbersCheckbox.checked) tiposSeleccionados.push(numbers);
+    if (useSymbolsCheckbox.checked) tiposSeleccionados.push(symbols);
+
+    // 1. Añadir un carácter de cada tipo seleccionado
+    tiposSeleccionados.forEach(tipo => {
+        const randomIndex = Math.floor(Math.random() * tipo.length);
+        passwordArray.push(tipo[randomIndex]);
+    });
+
+    // 2. Completar el resto de la contraseña con caracteres aleatorios del conjunto total
+    for (let i = passwordArray.length; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        passwordArray.push(characters[randomIndex]);
+    }
+
+    // 3. Mezclar el arreglo para que la posición de los caracteres sea aleatoria
+    mezclarArray(passwordArray);
+
+    return passwordArray.join('');
 }
 
 /**
@@ -171,7 +213,7 @@ copyButton.onclick = function () {
 
 /**
  * Verifica que al menos un tipo de carácter esté seleccionado
- * para habilitar o deshabilitar el botón “Generar”.
+ * para habilitar o deshabilitar el botón "Generar".
  */
 let checkAtLeastOneSelected = () => {
     const noOptionSelected =
